@@ -1,10 +1,10 @@
-query {
+{
   repository(name: "portfolio", owner: "TheMeatPacker") {
-    releases(last: 10){
-      edges{
-      	node{
-          author{
-           name 
+    releases(last: 10) {
+      edges {
+        node {
+          author {
+            name
           }
           createdAt
           description
@@ -12,10 +12,8 @@ query {
           publishedAt
           url
           name
-          
         }
-    	}
-      
+      }
     }
   }
 }
