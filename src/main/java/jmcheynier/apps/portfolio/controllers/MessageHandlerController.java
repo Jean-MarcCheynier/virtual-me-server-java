@@ -17,14 +17,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import jmcheynier.apps.portfolio.models.SAP.conversationalAI.DialogRequest;
+import jmcheynier.apps.portfolio.models.SAP.conversationalAI.Message;
+import jmcheynier.apps.portfolio.services.SAPService;
+
 @RestController
-@RequestMapping(value = "/api/socket")
+@RequestMapping(value = "/api/v1/socket")
 @CrossOrigin("*")
 public class MessageHandlerController {
 	
 	@Autowired
-
     private SimpMessagingTemplate simpMessagingTemplate;
+	
+	@Autowired
+	private SAPService SAPService;
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> useSimpleRest(@RequestBody  Map<String, String> message){
@@ -56,6 +62,21 @@ public class MessageHandlerController {
                 this.simpMessagingTemplate.convertAndSend("/socket-publisher/"+messageConverted.get("fromId"),message);
             }else{
                 this.simpMessagingTemplate.convertAndSend("/socket-publisher",messageConverted);
+                DialogRequest dialogRequest = new DialogRequest();
+                Message messageIn = new Message("text", messageConverted.get("message"));
+                dialogRequest.setConversationId("test");
+                dialogRequest.setMessage(messageIn);
+                String response;
+				try {
+					response = SAPService.sendDialogRequest(dialogRequest);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					response = "error";
+				}
+                this.simpMessagingTemplate.convertAndSend("/socket-publisher/"+messageConverted.get("fromId"),response);
+                
+              
             }
         }
         return messageConverted;
