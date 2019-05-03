@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class NLP {
 	private String uuid;
 	private List<Intent> intents;
-	private Map<String, Entity> entities;
+	private Map<String, List<Map<String, String>>> entities;
 	private String language;
 	@JsonProperty("processing_language")
 	private String processingLanguage;
@@ -34,10 +34,11 @@ public class NLP {
 	public void setIntents(List<Intent> intents) {
 		this.intents = intents;
 	}
-	public Map<String, Entity> getEntities() {
+	
+	public Map<String, List<Map<String, String>>> getEntities() {
 		return entities;
 	}
-	public void setEntities(Map<String, Entity> entities) {
+	public void setEntities(Map<String, List<Map<String, String>>> entities) {
 		this.entities = entities;
 	}
 	public String getLanguage() {

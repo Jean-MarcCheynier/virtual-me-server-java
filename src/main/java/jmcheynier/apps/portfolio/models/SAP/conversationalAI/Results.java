@@ -19,6 +19,7 @@ public class Results {
 	public void setQna(QNA qna) {
 		this.qna = qna;
 	}
+	
 	public List<Message> getMessages() {
 		return messages;
 	}

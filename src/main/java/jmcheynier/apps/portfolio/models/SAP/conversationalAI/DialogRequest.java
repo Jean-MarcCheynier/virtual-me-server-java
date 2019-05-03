@@ -6,17 +6,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class DialogRequest {
 	
-	private Message message;
+	private MessageText message;
 	@JsonProperty("conversation_id")
 	private String conversationId;
 	private String language;
 	private Map<String, String> memory;
 	
 	
-	public Message getMessage() {
+	public MessageText getMessage() {
 		return message;
 	}
-	public void setMessage(Message message) {
+	public void setMessage(MessageText message) {
 		this.message = message;
 	}
 	public String getConversationId() {

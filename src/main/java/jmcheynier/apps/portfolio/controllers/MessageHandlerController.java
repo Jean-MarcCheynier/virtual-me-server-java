@@ -1,6 +1,7 @@
 package jmcheynier.apps.portfolio.controllers;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jmcheynier.apps.portfolio.models.SAP.conversationalAI.DialogRequest;
+import jmcheynier.apps.portfolio.models.SAP.conversationalAI.IMessage;
 import jmcheynier.apps.portfolio.models.SAP.conversationalAI.Message;
+import jmcheynier.apps.portfolio.models.SAP.conversationalAI.MessageButton;
+import jmcheynier.apps.portfolio.models.SAP.conversationalAI.MessageText;
 import jmcheynier.apps.portfolio.services.SAPService;
 
 @RestController
@@ -63,18 +67,31 @@ public class MessageHandlerController {
             }else{
                 this.simpMessagingTemplate.convertAndSend("/socket-publisher",messageConverted);
                 DialogRequest dialogRequest = new DialogRequest();
-                Message messageIn = new Message("text", messageConverted.get("message"));
+                MessageText messageIn = new MessageText("text", messageConverted.get("content"));
                 dialogRequest.setConversationId("test");
                 dialogRequest.setMessage(messageIn);
                 String response;
+                
+                List<Message> messagesQueue = null;
 				try {
-					response = SAPService.sendDialogRequest(dialogRequest);
+					messagesQueue = SAPService.sendDialogRequestV2(dialogRequest);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 					response = "error";
 				}
-                this.simpMessagingTemplate.convertAndSend("/socket-publisher/"+messageConverted.get("fromId"),response);
+				
+				if( messagesQueue != null && !messagesQueue.isEmpty()) {
+					for(Message m : messagesQueue) {
+						if(m instanceof MessageText){
+							m = (MessageText) m;
+						}else if(m instanceof MessageButton) {
+							m = (MessageText) m;
+						}
+						this.simpMessagingTemplate.convertAndSend("/socket-publisher/"+messageConverted.get("fromId"),m);
+					}
+            	}
+                
                 
               
             }
