@@ -82,12 +82,7 @@ public class MessageHandlerController {
 				}
 				
 				if( messagesQueue != null && !messagesQueue.isEmpty()) {
-					for(Message m : messagesQueue) {
-						if(m instanceof MessageText){
-							m = (MessageText) m;
-						}else if(m instanceof MessageButton) {
-							m = (MessageText) m;
-						}
+					for(Message m : messagesQueue) {	
 						this.simpMessagingTemplate.convertAndSend("/socket-publisher/"+messageConverted.get("fromId"),m);
 					}
             	}
