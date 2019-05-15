@@ -19,9 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jmcheynier.apps.portfolio.models.SAP.conversationalAI.DialogRequest;
-import jmcheynier.apps.portfolio.models.SAP.conversationalAI.IMessage;
 import jmcheynier.apps.portfolio.models.SAP.conversationalAI.Message;
-import jmcheynier.apps.portfolio.models.SAP.conversationalAI.MessageButton;
 import jmcheynier.apps.portfolio.models.SAP.conversationalAI.MessageText;
 import jmcheynier.apps.portfolio.services.SAPService;
 
