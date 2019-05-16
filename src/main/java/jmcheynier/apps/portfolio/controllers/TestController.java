@@ -8,12 +8,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class TestController {
-
-	
-	@RequestMapping("/")
-	public String index() {
-		return "index";
-	}
 	
 	@RequestMapping("/test")
 	public String indexJSP() {
