@@ -39,10 +39,10 @@ public class MessageHandlerController {
         if(message.containsKey("message")){
         	//if the toId is present the message will be sent privately else broadcast it to all users
             if(message.containsKey("toId") && message.get("toId")!=null && !message.get("toId").equals("")){
-                this.simpMessagingTemplate.convertAndSend("/socket-publisher/"+message.get("toId"),message);
-                this.simpMessagingTemplate.convertAndSend("/socket-publisher/"+message.get("fromId"),message);
+                this.simpMessagingTemplate.convertAndSend("/subscribe/"+message.get("toId"),message);
+                this.simpMessagingTemplate.convertAndSend("/subscribe/"+message.get("fromId"),message);
             }else{
-                this.simpMessagingTemplate.convertAndSend("/socket-publisher",message);
+                this.simpMessagingTemplate.convertAndSend("/subscribe",message);
             }
             return new ResponseEntity<>(message, new HttpHeaders(), HttpStatus.OK);
         }
@@ -60,10 +60,10 @@ public class MessageHandlerController {
         }
         if(messageConverted!=null){
             if(messageConverted.containsKey("toId") && messageConverted.get("toId")!=null && !messageConverted.get("toId").equals("")){
-                this.simpMessagingTemplate.convertAndSend("/socket-publisher/"+messageConverted.get("toId"),messageConverted);
-                this.simpMessagingTemplate.convertAndSend("/socket-publisher/"+messageConverted.get("fromId"),message);
+                this.simpMessagingTemplate.convertAndSend("/subscribe/"+messageConverted.get("toId"),messageConverted);
+                this.simpMessagingTemplate.convertAndSend("/subscribe/"+messageConverted.get("fromId"),message);
             }else{
-                this.simpMessagingTemplate.convertAndSend("/socket-publisher",messageConverted);
+                this.simpMessagingTemplate.convertAndSend("/subscribe",messageConverted);
                 DialogRequest dialogRequest = new DialogRequest();
                 MessageText messageIn = new MessageText("text", messageConverted.get("content"));
                 dialogRequest.setConversationId("test");
@@ -81,7 +81,7 @@ public class MessageHandlerController {
 				
 				if( messagesQueue != null && !messagesQueue.isEmpty()) {
 					for(Message m : messagesQueue) {	
-						this.simpMessagingTemplate.convertAndSend("/socket-publisher/"+messageConverted.get("fromId"),m);
+						this.simpMessagingTemplate.convertAndSend("/subscribe/"+messageConverted.get("fromId"),m);
 					}
             	}
                 
