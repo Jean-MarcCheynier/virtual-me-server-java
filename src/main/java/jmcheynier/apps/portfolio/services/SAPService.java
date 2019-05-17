@@ -84,10 +84,10 @@ public class SAPService {
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 		HttpEntity <DialogRequest> entity = new HttpEntity<DialogRequest>(dialogRequest, headers);
 
-		ResponseEntity<DialogResponse> response = null;
+		ResponseEntity<String> response = null;
 		SocketService.sendPrivateMessageText(to, "2");
 		try {
-			response = restTemplate.exchange(apiSAPDialogUrl, HttpMethod.POST, entity, DialogResponse.class);
+			response = restTemplate.exchange(apiSAPDialogUrl, HttpMethod.POST, entity, String.class);
 			SocketService.sendPrivateMessageText(to, "3");
 		}catch(Exception e) {
 			SocketService.sendPrivateMessageText(to, "4");
