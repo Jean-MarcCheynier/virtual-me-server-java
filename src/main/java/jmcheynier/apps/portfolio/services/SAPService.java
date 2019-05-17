@@ -85,8 +85,8 @@ public class SAPService {
 			response = restTemplate.exchange(apiSAPDialogUrl, HttpMethod.POST, entity, DialogResponse.class);
 			SocketService.sendPrivateMessageText(to, "3");
 		}catch(Exception e) {
-			String error = e.getMessage();
-			String err = e.getStackTrace().toString();
+			String error = e.getMessage().replace('"', ' ').trim();
+			String err = e.getStackTrace().toString().replace('"', ' ').trim();
 			SocketService.sendPrivateMessageText(to, "4");
 			SocketService.sendPrivateMessageText(to, err);
 			SocketService.sendPrivateMessageText(to, error );
