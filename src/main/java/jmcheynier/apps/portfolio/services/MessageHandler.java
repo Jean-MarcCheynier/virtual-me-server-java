@@ -32,12 +32,9 @@ public class MessageHandler {
 	    dialogRequest.setConversationId(sessionId);
 	    dialogRequest.setMessage(mIn);
 	    List<Message> mOutList = null;
-		try {
-			mOutList = SAPService.sendDialogRequestV2(dialogRequest);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+		mOutList = SAPService.sendDialogRequestV2(dialogRequest);
+
 		if( mOutList != null && !mOutList.isEmpty()) {
 			socketService.sendPrivateMultiple(message.getTo(), mOutList);
     	}

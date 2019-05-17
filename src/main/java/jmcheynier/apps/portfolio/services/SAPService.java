@@ -1,9 +1,10 @@
 package jmcheynier.apps.portfolio.services;
 
-import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.eclipse.jdt.internal.compiler.tool.Archive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ResourceLoader;
@@ -19,6 +20,7 @@ import org.springframework.web.client.RestTemplate;
 import jmcheynier.apps.portfolio.models.SAP.conversationalAI.DialogRequest;
 import jmcheynier.apps.portfolio.models.SAP.conversationalAI.DialogResponse;
 import jmcheynier.apps.portfolio.models.SAP.conversationalAI.Message;
+import jmcheynier.apps.portfolio.models.SAP.conversationalAI.MessageText;
 
 @Service
 public class SAPService {
@@ -35,50 +37,32 @@ public class SAPService {
 	@Value("${api.sap.secret}")
 	private String apiSAPSecret;
 
-	private static final okhttp3.MediaType JSONTYPE  = okhttp3.MediaType.get("application/json; charset=utf-8");
-
-
-//	public String sendDialogRequest(DialogRequest d) throws IOException {
-//
-//		ObjectMapper mapper = new ObjectMapper();
-//		String json = mapper.writeValueAsString(d);
-//
-//		System.out.println(json);
-//
-//		OkHttpClient client = new OkHttpClient();
-//
-//		RequestBody body = RequestBody.create(JSONTYPE, json);
-//		Request request = new Request.Builder()
-//				.header("Authorization", apiSAPSecret)
-//				.url(apiSAPDialogUrl)
-//				.post(body)
-//				.build();
-//		try (Response response = client.newCall(request).execute()) {
-//			if (response.isSuccessful()) {
-//				return response.body().string();
-//			}
-//			return "error";
-//		}
-//
-//	}	
-
-	public List<Message> sendDialogRequestV2(DialogRequest dialogRequest) throws IOException {
+	public List<Message> sendDialogRequestV2(DialogRequest dialogRequest) {
+		
+		List<Message> listMessage = new ArrayList<Message>();
+		
 		HttpHeaders headers = new HttpHeaders();
 		headers.set(HttpHeaders.AUTHORIZATION, apiSAPSecret);
 		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 		HttpEntity <DialogRequest> entity = new HttpEntity<DialogRequest>(dialogRequest, headers);
 
-		ResponseEntity<String> response1 = restTemplate.exchange(apiSAPDialogUrl, HttpMethod.POST, entity, String.class);
-		if(response1.getStatusCode().equals(HttpStatus.OK)) {
-			String res1 = response1.getBody();
+		ResponseEntity<DialogResponse> response = null;
+		try {
+			response = restTemplate.exchange(apiSAPDialogUrl, HttpMethod.POST, entity, DialogResponse.class);
+		}catch(Exception e) {
+			MessageText m = new MessageText();
+			m.setContent(e.getStackTrace().toString());
+			listMessage.add(m);
+		}finally {
+			MessageText m2 = new MessageText();
+			m2.setContent("finally");
+			listMessage.add(m2);
 		}
-		ResponseEntity<DialogResponse> response2 = restTemplate.exchange(apiSAPDialogUrl, HttpMethod.POST, entity, DialogResponse.class);
-		DialogResponse d = new DialogResponse();
-		if(response2.getStatusCode().equals(HttpStatus.OK)) {
-			DialogResponse dialogResponse = response2.getBody();
-			return dialogResponse.getResults().getMessages();
+		if(response.getStatusCode().equals(HttpStatus.OK)) {
+			DialogResponse dialogResponse = response.getBody();
+			listMessage.addAll(dialogResponse.getResults().getMessages());
 		}
-		return null;
+		return listMessage;
 
 
 	}
