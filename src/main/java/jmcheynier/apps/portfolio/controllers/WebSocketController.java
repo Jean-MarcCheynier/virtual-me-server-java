@@ -96,7 +96,7 @@ public class WebSocketController {
 	public void handlePrivateMessages(@DestinationVariable String id, @Payload Message message, SimpMessageHeaderAccessor headerAccessor) throws JsonProcessingException, IOException {
 		String sessionId = headerAccessor.getSessionId();
 		message.setTo(id);
-		messageHandler.SAPCAIDialog(sessionId, message);
+		messageHandler.SAPCAIDialog2(sessionId, message);
 
 	}
 

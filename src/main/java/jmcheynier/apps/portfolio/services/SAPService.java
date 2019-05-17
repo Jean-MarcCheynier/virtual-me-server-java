@@ -66,5 +66,32 @@ public class SAPService {
 
 
 	}
+	
+	public String sendDialogRequestV3(DialogRequest dialogRequest) {
+		
+		String res = "";
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.set(HttpHeaders.AUTHORIZATION, apiSAPSecret);
+		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+		HttpEntity <DialogRequest> entity = new HttpEntity<DialogRequest>(dialogRequest, headers);
+
+		ResponseEntity<DialogResponse> response = null;
+		try {
+			response = restTemplate.exchange(apiSAPDialogUrl, HttpMethod.POST, entity, DialogResponse.class);
+			res += "1";
+		}catch(Exception e) {
+			res += "2";
+			res += e.getStackTrace().toString();
+		}finally {
+			res += "3";
+		}
+		if(response.getStatusCode().equals(HttpStatus.OK)) {
+			res += "4";				
+		}
+		return res;
+
+
+	}
 
 }
