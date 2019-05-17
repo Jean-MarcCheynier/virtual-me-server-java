@@ -91,7 +91,9 @@ public class SAPService {
 			SocketService.sendPrivateMessageText(to, "3");
 		}catch(Exception e) {
 			SocketService.sendPrivateMessageText(to, "4");
+			logger.error("COUCOU");
 			logger.error(e.getMessage());
+			e.printStackTrace();
 
 			
 		}finally {
