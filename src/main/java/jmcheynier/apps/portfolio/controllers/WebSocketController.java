@@ -1,11 +1,10 @@
 package jmcheynier.apps.portfolio.controllers;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -15,6 +14,12 @@ import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessageType;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import jmcheynier.apps.portfolio.models.Message;
+import jmcheynier.apps.portfolio.services.MessageHandler;
 
 /**
  * Main controller to handle data sent by clients. 
@@ -28,6 +33,8 @@ public class WebSocketController {
 
 	@Autowired
 	private SimpMessagingTemplate messagingTemplate;
+	@Autowired
+	private MessageHandler messageHandler;
 
 	private final ObjectMapper jsonMapper = new ObjectMapper();
 
@@ -83,6 +90,14 @@ public class WebSocketController {
 		} else {
 			sendMessageToChannel(channel, headerAccessor.getSessionId(), msg);
 		}
+	}
+	
+	@MessageMapping("/private/{id}")
+	public void handlePrivateMessages(@DestinationVariable String id, @Payload Message message, SimpMessageHeaderAccessor headerAccessor) throws JsonProcessingException, IOException {
+		String sessionId = headerAccessor.getSessionId();
+		message.setTo(id);
+		messageHandler.SAPCAIDialog(sessionId, message);
+
 	}
 
 	/**

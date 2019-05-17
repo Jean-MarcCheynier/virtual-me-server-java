@@ -1,6 +1,7 @@
 package jmcheynier.apps.portfolio.models;
 
 public class Message {
+	private String type;
     private String from;
     private String to;
     private String content;
@@ -33,4 +34,14 @@ public class Message {
     public void setContent(String content) {
         this.content = content;
     }
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+    
+    
 }

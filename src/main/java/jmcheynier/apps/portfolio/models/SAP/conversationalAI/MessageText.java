@@ -9,9 +9,9 @@ public class MessageText extends Message {
 		super();
 	}
 	
-	public MessageText(String type, String content) {
+	public MessageText(jmcheynier.apps.portfolio.models.Message m) {
 		super();
-		this.setContent(content);
+		this.setContent(m.getContent());
 	}
 
 	public String getContent() {

@@ -1,7 +1,6 @@
 package jmcheynier.apps.portfolio.services;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,17 +16,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import jmcheynier.apps.portfolio.models.SAP.conversationalAI.DialogRequest;
 import jmcheynier.apps.portfolio.models.SAP.conversationalAI.DialogResponse;
-import jmcheynier.apps.portfolio.models.SAP.conversationalAI.IMessage;
 import jmcheynier.apps.portfolio.models.SAP.conversationalAI.Message;
-import jmcheynier.apps.portfolio.models.SAP.conversationalAI.MessageText;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
-import okhttp3.Response;
 
 @Service
 public class SAPService {
@@ -47,29 +38,29 @@ public class SAPService {
 	private static final okhttp3.MediaType JSONTYPE  = okhttp3.MediaType.get("application/json; charset=utf-8");
 
 
-	public String sendDialogRequest(DialogRequest d) throws IOException {
-
-		ObjectMapper mapper = new ObjectMapper();
-		String json = mapper.writeValueAsString(d);
-
-		System.out.println(json);
-
-		OkHttpClient client = new OkHttpClient();
-
-		RequestBody body = RequestBody.create(JSONTYPE, json);
-		Request request = new Request.Builder()
-				.header("Authorization", apiSAPSecret)
-				.url(apiSAPDialogUrl)
-				.post(body)
-				.build();
-		try (Response response = client.newCall(request).execute()) {
-			if (response.isSuccessful()) {
-				return response.body().string();
-			}
-			return "error";
-		}
-
-	}	
+//	public String sendDialogRequest(DialogRequest d) throws IOException {
+//
+//		ObjectMapper mapper = new ObjectMapper();
+//		String json = mapper.writeValueAsString(d);
+//
+//		System.out.println(json);
+//
+//		OkHttpClient client = new OkHttpClient();
+//
+//		RequestBody body = RequestBody.create(JSONTYPE, json);
+//		Request request = new Request.Builder()
+//				.header("Authorization", apiSAPSecret)
+//				.url(apiSAPDialogUrl)
+//				.post(body)
+//				.build();
+//		try (Response response = client.newCall(request).execute()) {
+//			if (response.isSuccessful()) {
+//				return response.body().string();
+//			}
+//			return "error";
+//		}
+//
+//	}	
 
 	public List<Message> sendDialogRequestV2(DialogRequest dialogRequest) throws IOException {
 		HttpHeaders headers = new HttpHeaders();
