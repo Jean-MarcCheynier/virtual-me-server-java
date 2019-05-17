@@ -89,6 +89,7 @@ public class SAPService {
 		try {
 			response = restTemplate.exchange(apiSAPDialogUrl, HttpMethod.POST, entity, String.class);
 			SocketService.sendPrivateMessageText(to, "3");
+			
 		}catch(Exception e) {
 			SocketService.sendPrivateMessageText(to, "4");
 			logger.error("COUCOU");
@@ -100,6 +101,7 @@ public class SAPService {
 			SocketService.sendPrivateMessageText(to, "5");
 		}
 		if(response.getStatusCode().equals(HttpStatus.OK)) {
+			SocketService.sendPrivateMessageText(to, response.getBody());
 			SocketService.sendPrivateMessageText(to, "6");			
 		}
 
