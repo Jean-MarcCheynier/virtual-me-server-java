@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.eclipse.jdt.internal.compiler.tool.Archive;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ResourceLoader;
@@ -24,6 +25,8 @@ import jmcheynier.apps.portfolio.models.SAP.conversationalAI.MessageText;
 
 @Service
 public class SAPService {
+	
+	private Logger logger = LoggerFactory.getLogger(SAPService.class);
 
 	@Autowired 
 	ResourceLoader resourceLoader;
@@ -42,6 +45,8 @@ public class SAPService {
 
 	public List<Message> sendDialogRequestV2(DialogRequest dialogRequest) {
 		
+		
+		logger.error("coucou");
 		List<Message> listMessage = new ArrayList<Message>();
 		
 		HttpHeaders headers = new HttpHeaders();
@@ -85,11 +90,9 @@ public class SAPService {
 			response = restTemplate.exchange(apiSAPDialogUrl, HttpMethod.POST, entity, DialogResponse.class);
 			SocketService.sendPrivateMessageText(to, "3");
 		}catch(Exception e) {
-			String error = e.getMessage().replace('"', ' ').trim();
-			String err = e.getStackTrace().toString().replace('"', ' ').trim();
 			SocketService.sendPrivateMessageText(to, "4");
-			SocketService.sendPrivateMessageText(to, err);
-			SocketService.sendPrivateMessageText(to, error );
+			logger.error(e.getMessage());
+
 			
 		}finally {
 			SocketService.sendPrivateMessageText(to, "5");
