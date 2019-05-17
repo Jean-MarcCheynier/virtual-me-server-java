@@ -30,6 +30,9 @@ public class SAPService {
 
 	@Autowired
 	RestTemplate restTemplate;
+	
+	@Autowired
+	SocketService SocketService;
 
 	@Value("${api.sap.dialog.url}")
 	private String apiSAPDialogUrl;
@@ -67,9 +70,9 @@ public class SAPService {
 
 	}
 	
-	public String sendDialogRequestV3(DialogRequest dialogRequest) {
+	public void sendDialogRequestV3(String to, DialogRequest dialogRequest) {
 		
-		String res = "";
+		SocketService.sendPrivateMessageText(to, "1");
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.set(HttpHeaders.AUTHORIZATION, apiSAPSecret);
@@ -77,19 +80,18 @@ public class SAPService {
 		HttpEntity <DialogRequest> entity = new HttpEntity<DialogRequest>(dialogRequest, headers);
 
 		ResponseEntity<DialogResponse> response = null;
+		SocketService.sendPrivateMessageText(to, "2");
 		try {
 			response = restTemplate.exchange(apiSAPDialogUrl, HttpMethod.POST, entity, DialogResponse.class);
-			res += "1";
+			SocketService.sendPrivateMessageText(to, "3");
 		}catch(Exception e) {
-			res += "2";
-			res += e.getStackTrace().toString();
+			SocketService.sendPrivateMessageText(to, "4");
 		}finally {
-			res += "3";
+			SocketService.sendPrivateMessageText(to, "5");
 		}
 		if(response.getStatusCode().equals(HttpStatus.OK)) {
-			res += "4";				
+			SocketService.sendPrivateMessageText(to, "6");			
 		}
-		return res;
 
 
 	}

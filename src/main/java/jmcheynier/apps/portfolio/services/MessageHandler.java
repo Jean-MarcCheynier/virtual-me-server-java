@@ -43,19 +43,17 @@ public class MessageHandler {
 	
 	public void SAPCAIDialog2(String sessionId, jmcheynier.apps.portfolio.models.Message message) {
 		MessageText mIn = new MessageText(message);
-		String res = "0";
+		socketService.sendPrivateMessageText(message.getTo(), "0");
 		
 		DialogRequest dialogRequest = new DialogRequest();
 
 	    dialogRequest.setConversationId(sessionId);
 	    dialogRequest.setMessage(mIn);
 
-		String mOut = SAPService.sendDialogRequestV3(dialogRequest);
-		res += mOut;
+		SAPService.sendDialogRequestV3(message.getTo(), dialogRequest);
 
 		
-		mIn.setContent(res);
-		socketService.sendPrivateMessage(message.getTo(), mIn);
+		socketService.sendPrivateMessageText(message.getTo(), "6");
 	}
 }
     

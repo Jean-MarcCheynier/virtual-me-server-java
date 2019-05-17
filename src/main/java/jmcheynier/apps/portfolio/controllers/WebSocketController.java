@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jmcheynier.apps.portfolio.models.Message;
 import jmcheynier.apps.portfolio.services.MessageHandler;
+import jmcheynier.apps.portfolio.services.SocketService;
 
 /**
  * Main controller to handle data sent by clients. 
@@ -35,6 +36,9 @@ public class WebSocketController {
 	private SimpMessagingTemplate messagingTemplate;
 	@Autowired
 	private MessageHandler messageHandler;
+	
+	@Autowired
+	private SocketService socketService;
 
 	private final ObjectMapper jsonMapper = new ObjectMapper();
 
@@ -95,6 +99,7 @@ public class WebSocketController {
 	@MessageMapping("/private/{id}")
 	public void handlePrivateMessages(@DestinationVariable String id, @Payload Message message, SimpMessageHeaderAccessor headerAccessor) throws JsonProcessingException, IOException {
 		String sessionId = headerAccessor.getSessionId();
+		socketService.sendPrivateMessageText(message.getTo(), "-1");
 		message.setTo(id);
 		messageHandler.SAPCAIDialog2(sessionId, message);
 
