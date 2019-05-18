@@ -4,6 +4,7 @@ public class DialogResponse {
 	
 	private Results results;
 	private String message;
+	
 	public Results getResults() {
 		return results;
 	}

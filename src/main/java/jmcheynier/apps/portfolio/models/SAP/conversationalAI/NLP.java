@@ -14,6 +14,7 @@ public class NLP {
 	private String language;
 	@JsonProperty("processing_language")
 	private String processingLanguage;
+	private String version;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
 	private Date timestamp;
 	private int status;
@@ -52,6 +53,12 @@ public class NLP {
 	}
 	public void setProcessingLanguage(String processingLanguage) {
 		this.processingLanguage = processingLanguage;
+	}
+	public String getVersion() {
+		return version;
+	}
+	public void setVersion(String version) {
+		this.version = version;
 	}
 	public Date getTimestamp() {
 		return timestamp;

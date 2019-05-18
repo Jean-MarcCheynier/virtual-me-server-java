@@ -85,10 +85,15 @@ public class SAPService {
 		HttpEntity <DialogRequest> entity = new HttpEntity<DialogRequest>(dialogRequest, headers);
 
 		ResponseEntity<String> response = null;
+		ResponseEntity<DialogResponse> response2 = null;
 		SocketService.sendPrivateMessageText(to, "2");
 		try {
 			response = restTemplate.exchange(apiSAPDialogUrl, HttpMethod.POST, entity, String.class);
+			SocketService.sendPrivateMessageText(to, response.getBody());
 			SocketService.sendPrivateMessageText(to, "3");
+			response2 = restTemplate.exchange(apiSAPDialogUrl, HttpMethod.POST, entity, DialogResponse.class);
+			SocketService.sendPrivateMessage(to, response2.getBody().getResults().getMessages().get(0));
+			SocketService.sendPrivateMessageText(to, "3 bis");
 			
 		}catch(Exception e) {
 			SocketService.sendPrivateMessageText(to, "4");
@@ -101,7 +106,7 @@ public class SAPService {
 			SocketService.sendPrivateMessageText(to, "5");
 		}
 		if(response.getStatusCode().equals(HttpStatus.OK)) {
-			SocketService.sendPrivateMessageText(to, response.getBody());
+			
 			SocketService.sendPrivateMessageText(to, "6");			
 		}
 

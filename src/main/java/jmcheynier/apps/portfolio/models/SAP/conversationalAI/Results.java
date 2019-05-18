@@ -7,6 +7,7 @@ public class Results {
 	private QNA qna;
 	private List<Message> messages;
 	private Conversation conversation;
+	
 	public NLP getNlp() {
 		return nlp;
 	}
