@@ -18,6 +18,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import jmcheynier.apps.portfolio.models.SAP.conversationalAI.DialogRequest;
 import jmcheynier.apps.portfolio.models.SAP.conversationalAI.DialogResponse;
 import jmcheynier.apps.portfolio.models.SAP.conversationalAI.Message;
@@ -91,9 +93,10 @@ public class SAPService {
 			response = restTemplate.exchange(apiSAPDialogUrl, HttpMethod.POST, entity, String.class);
 			SocketService.sendPrivateMessageText(to, response.getBody());
 			SocketService.sendPrivateMessageText(to, "3");
-			response2 = restTemplate.exchange(apiSAPDialogUrl, HttpMethod.POST, entity, DialogResponse.class);
-			SocketService.sendPrivateMessage(to, response2.getBody().getResults().getMessages().get(0));
-			SocketService.sendPrivateMessageText(to, "3 bis");
+			ObjectMapper objectMapper = new ObjectMapper();
+			DialogResponse d = objectMapper.readValue(response.getBody(), DialogResponse.class); 
+			MessageText m = (MessageText) d.getResults().getMessages().get(0);
+			SocketService.sendPrivateMessageText(to, m.getContent());
 			
 		}catch(Exception e) {
 			SocketService.sendPrivateMessageText(to, "4");
