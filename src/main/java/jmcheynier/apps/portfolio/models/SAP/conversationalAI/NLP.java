@@ -15,7 +15,7 @@ public class NLP {
 	@JsonProperty("processing_language")
 	private String processingLanguage;
 	private String version;
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm a z")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
 	private Date timestamp;
 	private int status;
 	private String source;
