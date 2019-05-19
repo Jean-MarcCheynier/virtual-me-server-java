@@ -33,7 +33,7 @@ public class MessageHandler {
 	    dialogRequest.setMessage(mIn);
 	    List<Message> mOutList = null;
 
-		mOutList = SAPService.sendDialogRequestV2(dialogRequest);
+		mOutList = SAPService.sendDialogRequest(dialogRequest);
 
 		if( mOutList != null && !mOutList.isEmpty()) {
 			socketService.sendPrivateMultiple(message.getTo(), mOutList);

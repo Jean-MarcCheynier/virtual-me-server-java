@@ -45,10 +45,8 @@ public class SAPService {
 	@Value("${api.sap.secret}")
 	private String apiSAPSecret;
 
-	public List<Message> sendDialogRequestV2(DialogRequest dialogRequest) {
+	public List<Message> sendDialogRequest(DialogRequest dialogRequest) {
 		
-		
-		logger.error("coucou");
 		List<Message> listMessage = new ArrayList<Message>();
 		
 		HttpHeaders headers = new HttpHeaders();
@@ -61,12 +59,9 @@ public class SAPService {
 			response = restTemplate.exchange(apiSAPDialogUrl, HttpMethod.POST, entity, DialogResponse.class);
 		}catch(Exception e) {
 			MessageText m = new MessageText();
-			m.setContent(e.getStackTrace().toString());
+			m.setContent("Unable to join bot");
 			listMessage.add(m);
 		}finally {
-			MessageText m2 = new MessageText();
-			m2.setContent("finally");
-			listMessage.add(m2);
 		}
 		if(response.getStatusCode().equals(HttpStatus.OK)) {
 			DialogResponse dialogResponse = response.getBody();
