@@ -101,7 +101,7 @@ public class WebSocketController {
 		String sessionId = headerAccessor.getSessionId();
 		socketService.sendPrivateMessageText(message.getTo(), "-1");
 		message.setTo(id);
-		messageHandler.SAPCAIDialog2(sessionId, message);
+		messageHandler.SAPCAIDialog(sessionId, message);
 
 	}
 

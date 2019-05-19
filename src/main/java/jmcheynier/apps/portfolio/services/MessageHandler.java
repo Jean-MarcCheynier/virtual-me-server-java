@@ -41,20 +41,20 @@ public class MessageHandler {
 	
 	}
 	
-	public void SAPCAIDialog2(String sessionId, jmcheynier.apps.portfolio.models.Message message) {
-		MessageText mIn = new MessageText(message);
-		socketService.sendPrivateMessageText(message.getTo(), "0");
-		
-		DialogRequest dialogRequest = new DialogRequest();
-
-	    dialogRequest.setConversationId(sessionId);
-	    dialogRequest.setMessage(mIn);
-
-		SAPService.sendDialogRequestV3(message.getTo(), dialogRequest);
-
-		
-		socketService.sendPrivateMessageText(message.getTo(), "6");
-	}
+//	public void SAPCAIDialog2(String sessionId, jmcheynier.apps.portfolio.models.Message message) {
+//		MessageText mIn = new MessageText(message);
+//		socketService.sendPrivateMessageText(message.getTo(), "0");
+//		
+//		DialogRequest dialogRequest = new DialogRequest();
+//
+//	    dialogRequest.setConversationId(sessionId);
+//	    dialogRequest.setMessage(mIn);
+//
+//		SAPService.sendDialogRequestV3(message.getTo(), dialogRequest);
+//
+//		
+//		socketService.sendPrivateMessageText(message.getTo(), "6");
+//	}
 }
     
 

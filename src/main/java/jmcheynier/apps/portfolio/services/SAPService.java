@@ -77,45 +77,45 @@ public class SAPService {
 
 	}
 	
-	public void sendDialogRequestV3(String to, DialogRequest dialogRequest) {
-		
-		SocketService.sendPrivateMessageText(to, "1");
-		
-		HttpHeaders headers = new HttpHeaders();
-		headers.set(HttpHeaders.AUTHORIZATION, apiSAPSecret);
-		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-		HttpEntity <DialogRequest> entity = new HttpEntity<DialogRequest>(dialogRequest, headers);
-
-		ResponseEntity<String> response = null;
-		ResponseEntity<DialogResponse> response2 = null;
-		SocketService.sendPrivateMessageText(to, "2");
-		try {
-			response = restTemplate.exchange(apiSAPDialogUrl, HttpMethod.POST, entity, String.class);
-			SocketService.sendPrivateMessageText(to, response.getBody());
-			SocketService.sendPrivateMessageText(to, "3");
-			ObjectMapper objectMapper = new ObjectMapper();
-			DialogResponse d = objectMapper.readValue(response.getBody(), DialogResponse.class); 
-			MessageText m = (MessageText) d.getResults().getMessages().get(0);
-			SocketService.sendPrivateMessageText(to, m.getContent());
-			
-		}catch(Exception e) {
-			SocketService.sendPrivateMessageText(to, "4");
-			SocketService.sendPrivateMessageText(to, e.getMessage());
-			SocketService.sendPrivateMessageText(to, e.getStackTrace().toString());
-			logger.error("COUCOU");
-			logger.error(e.getMessage());
-			e.printStackTrace();
-
-			
-		}finally {
-			SocketService.sendPrivateMessageText(to, "5");
-		}
-		if(response.getStatusCode().equals(HttpStatus.OK)) {
-			
-			SocketService.sendPrivateMessageText(to, "6");			
-		}
-
-
-	}
+//	public void sendDialogRequestV3(String to, DialogRequest dialogRequest) {
+//		
+//		SocketService.sendPrivateMessageText(to, "1");
+//		
+//		HttpHeaders headers = new HttpHeaders();
+//		headers.set(HttpHeaders.AUTHORIZATION, apiSAPSecret);
+//		headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+//		HttpEntity <DialogRequest> entity = new HttpEntity<DialogRequest>(dialogRequest, headers);
+//
+//		ResponseEntity<String> response = null;
+//		ResponseEntity<DialogResponse> response2 = null;
+//		SocketService.sendPrivateMessageText(to, "2");
+//		try {
+//			response = restTemplate.exchange(apiSAPDialogUrl, HttpMethod.POST, entity, String.class);
+//			SocketService.sendPrivateMessageText(to, response.getBody());
+//			SocketService.sendPrivateMessageText(to, "3");
+//			ObjectMapper objectMapper = new ObjectMapper();
+//			DialogResponse d = objectMapper.readValue(response.getBody(), DialogResponse.class); 
+//			MessageText m = (MessageText) d.getResults().getMessages().get(0);
+//			SocketService.sendPrivateMessageText(to, m.getContent());
+//			
+//		}catch(Exception e) {
+//			SocketService.sendPrivateMessageText(to, "4");
+//			SocketService.sendPrivateMessageText(to, e.getMessage());
+//			SocketService.sendPrivateMessageText(to, e.getStackTrace().toString());
+//			logger.error("COUCOU");
+//			logger.error(e.getMessage());
+//			e.printStackTrace();
+//
+//			
+//		}finally {
+//			SocketService.sendPrivateMessageText(to, "5");
+//		}
+//		if(response.getStatusCode().equals(HttpStatus.OK)) {
+//			
+//			SocketService.sendPrivateMessageText(to, "6");			
+//		}
+//
+//
+//	}
 
 }
