@@ -12,6 +12,7 @@
           publishedAt
           url
           name
+          tagName 
         }
       }
     }

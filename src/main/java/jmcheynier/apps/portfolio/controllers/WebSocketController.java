@@ -99,10 +99,9 @@ public class WebSocketController {
 	@MessageMapping("/private/{id}")
 	public void handlePrivateMessages(@DestinationVariable String id, @Payload Message message, SimpMessageHeaderAccessor headerAccessor) throws JsonProcessingException, IOException {
 		String sessionId = headerAccessor.getSessionId();
-		socketService.sendPrivateMessageText(message.getTo(), "-1");
+		socketService.sendPrivateMessageText(id, "-1");
 		message.setTo(id);
 		messageHandler.SAPCAIDialog(sessionId, message);
-
 	}
 
 	/**

@@ -61,9 +61,9 @@ public class SAPService {
 			MessageText m = new MessageText();
 			m.setContent("Unable to join bot");
 			listMessage.add(m);
-		}finally {
 		}
-		if(response.getStatusCode().equals(HttpStatus.OK)) {
+		
+		if(response!=null && response.getStatusCode().equals(HttpStatus.OK)) {
 			DialogResponse dialogResponse = response.getBody();
 			listMessage.addAll(dialogResponse.getResults().getMessages());
 		}
