@@ -1,0 +1,20 @@
+{
+  repository(name: "portfolio", owner: "TheMeatPacker") {
+    releases(last: 10) {
+      edges {
+        node {
+          author {
+            name
+          }
+          createdAt
+          description
+          isDraft
+          publishedAt
+          url
+          name
+          tagName 
+        }
+      }
+    }
+  }
+}

@@ -2,8 +2,6 @@ package jmcheynier.apps.portfolio.services;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 import org.json.JSONObject;
@@ -33,6 +31,7 @@ public class GithubService {
 	
 
 	private static final String QUERY = "queries/query.txt";
+	private static final String QUERY_RELEASES = "queries/queryReleases.txt";
 	private static final MediaType JSONTYPE  = MediaType.get("application/json; charset=utf-8");
 	
 	
@@ -42,7 +41,31 @@ public class GithubService {
 	    ClassLoader classLoader = getClass().getClassLoader();
 	    File file = new File(classLoader.getResource(QUERY).getFile());
 	    String querieString = FileUtils.readFileToString(file, "UTF-8");  
-	    json.put("query", querieString.trim());
+	    json.put("query",  querieString.trim()/*.replaceAll("(\\r|\\n)", "")*/);
+		
+	    System.out.println(json.toString());
+
+		OkHttpClient client = new OkHttpClient();
+		
+		RequestBody body = RequestBody.create(JSONTYPE, json.toString());
+		Request request = new Request.Builder()
+				.header("Authorization", apiGithubSecret)
+				.url(apiGithubUrl)
+				.post(body)
+				.build();
+		try (Response response = client.newCall(request).execute()) {
+			return response.body().string();
+		}
+		
+	}	
+	
+	public String getGithubReleases() throws IOException {
+		JSONObject json = new JSONObject();
+		 
+	    ClassLoader classLoader = getClass().getClassLoader();
+	    File file = new File(classLoader.getResource(QUERY_RELEASES).getFile());
+	    String querieString = FileUtils.readFileToString(file, "UTF-8");  
+	    json.put("query",  querieString.trim());
 		
 	    System.out.println(json.toString());
 
