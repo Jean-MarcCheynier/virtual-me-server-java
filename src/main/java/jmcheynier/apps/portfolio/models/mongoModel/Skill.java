@@ -2,7 +2,9 @@ package jmcheynier.apps.portfolio.models.mongoModel;
 
 import org.springframework.data.annotation.Id;
 
-public class Skill {
+import jmcheynier.apps.portfolio.models.SAP.SAPCaiTransformable;
+
+public class Skill extends SAPCaiTransformable {
 	
 
     @Id
@@ -22,5 +24,11 @@ public class Skill {
                 "Customer[id=%s, name='%s', type='%s']",
                 id, name, type);
     }
+
+	@Override
+	public String SAPCaiStringify(String isocode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

@@ -18,8 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import jmcheynier.apps.portfolio.models.SAP.conversationalAI.DialogRequest;
 import jmcheynier.apps.portfolio.models.SAP.conversationalAI.DialogResponse;
 import jmcheynier.apps.portfolio.models.SAP.conversationalAI.Message;
@@ -57,7 +55,9 @@ public class SAPService {
 		ResponseEntity<DialogResponse> response = null;
 		try {
 			response = restTemplate.exchange(apiSAPDialogUrl, HttpMethod.POST, entity, DialogResponse.class);
+			logger.info("response from SAP");
 		}catch(Exception e) {
+			logger.error(e.getMessage());
 			MessageText m = new MessageText();
 			m.setContent("Unable to join bot");
 			listMessage.add(m);
