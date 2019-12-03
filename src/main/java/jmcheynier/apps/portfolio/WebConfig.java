@@ -1,6 +1,7 @@
 package jmcheynier.apps.portfolio;
 
 import javax.servlet.ServletRegistration;
+import jmcheynier.apps.portfolio.WebSocketConfig;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
@@ -25,7 +26,7 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
 
 	@Override
 	protected Class<?>[] getServletConfigClasses() {
-		return new Class<?>[]{ WebsocketConfig.class };
+		return new Class<?>[]{ WebSocketConfig.class };
 	}
 
 	@Override

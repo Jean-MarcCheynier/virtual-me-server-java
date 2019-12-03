@@ -1,32 +1,35 @@
 package jmcheynier.apps.portfolio.models.mongoModel;
 
+import java.util.HashMap;
+
 import org.springframework.data.annotation.Id;
 
 import jmcheynier.apps.portfolio.models.SAP.SAPCaiTransformable;
+import jmcheynier.apps.portfolio.models.enums.LangIsocode;
+import jmcheynier.apps.portfolio.models.enums.LevelCode;
 
-public class Skill extends SAPCaiTransformable {
+public class Skill implements SAPCaiTransformable {
 	
 
     @Id
     public String id;
-    public String name;
+    public String code;
     public String type;
+    public LevelCode level;
+    public HashMap<LangIsocode, String> values;
+
 
     public Skill() {}
-
-    public Skill(String name) {
-        this.name = name;
-    }
 
     @Override
     public String toString() {
         return String.format(
-                "Customer[id=%s, name='%s', type='%s']",
-                id, name, type);
+                "Customer[id=%s, values='%s', type='%s']",
+                id, values, type);
     }
 
 	@Override
-	public String SAPCaiStringify(String isocode) {
+	public String SAPCaiStringify(LangIsocode isocode) {
 		// TODO Auto-generated method stub
 		return null;
 	}

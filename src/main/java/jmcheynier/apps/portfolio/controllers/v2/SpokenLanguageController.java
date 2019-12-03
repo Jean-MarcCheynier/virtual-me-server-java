@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import jmcheynier.apps.portfolio.controllers.v2.exceptions.ItemNotFoundException;
 import jmcheynier.apps.portfolio.controllers.v2.utils.SAPCaiObjectTransformer;
 import jmcheynier.apps.portfolio.controllers.v2.utils.SAPCaiObjectWrapper;
+import jmcheynier.apps.portfolio.models.enums.LangIsocode;
+import jmcheynier.apps.portfolio.models.enums.LevelCode;
 import jmcheynier.apps.portfolio.models.mongoModel.SpokenLanguage;
 import jmcheynier.apps.portfolio.services.cv.SpokenLanguageService;
 
@@ -25,19 +27,19 @@ public class SpokenLanguageController {
 
     @GetMapping
     public SAPCaiObjectWrapper<SpokenLanguage> list(
-    		@PathVariable("apiLang") Optional<String> apiLang) {
+    		@PathVariable("apiLang") Optional<LangIsocode> apiLang) {
         
     	return new SAPCaiObjectWrapper<SpokenLanguage>(spokenLanguageService.list(), apiLang.orElse(null));
     }
     
     @GetMapping("/isocode/{isocode}")
     public SAPCaiObjectWrapper<SpokenLanguage> getByIsocode(
-    		@PathVariable("isocode") String isocode,
-    		@PathVariable("apiLang") Optional<String> apiLang) {
+    		@PathVariable("isocode") LangIsocode isocode,
+    		@PathVariable("apiLang") Optional<LangIsocode> apiLang) {
     	
     	SAPCaiObjectWrapper<SpokenLanguage> res = new SAPCaiObjectWrapper<SpokenLanguage>(
-    			spokenLanguageService.getByIsocode(isocode.toLowerCase()), 
-    			apiLang.orElse(null));
+    			spokenLanguageService.getByIsocode(isocode), 
+    			apiLang.orElse(SAPCaiObjectTransformer.defaultLanguage));
     	if(res == null || res.getResults() == null || res.getResults().isEmpty()) {
     		throw new ItemNotFoundException();
     	}
@@ -46,12 +48,12 @@ public class SpokenLanguageController {
     
     @GetMapping("/level/{level}")
     public SAPCaiObjectWrapper<SpokenLanguage> getByLevel(
-    		@PathVariable("level") String level,
-    		@PathVariable("apiLang") Optional<String> apiLang) {
+    		@PathVariable("level") LevelCode level,
+    		@PathVariable("apiLang") Optional<LangIsocode> apiLang) {
     	
     	SAPCaiObjectWrapper<SpokenLanguage> res = new SAPCaiObjectWrapper<SpokenLanguage>(
     			spokenLanguageService.getByLevel(level), 
-    			apiLang.orElse(SAPCaiObjectTransformer.defaultLanguage).toLowerCase());
+    			apiLang.orElse(SAPCaiObjectTransformer.defaultLanguage));
     	
     	if(res == null || res.getResults() == null || res.getResults().isEmpty()) {
     		throw new ItemNotFoundException();
@@ -61,12 +63,12 @@ public class SpokenLanguageController {
     
     @GetMapping("/isocode/{isocode}/level/{level}")
     public SAPCaiObjectWrapper<SpokenLanguage> getByIsocodeAnLevel(
-    		@PathVariable("isocode") String isocode,
-    		@PathVariable("level") String level,
-    		@PathVariable("apiLang") Optional<String> apiLang) {
+    		@PathVariable("isocode") LangIsocode isocode,
+    		@PathVariable("level") LevelCode level,
+    		@PathVariable("apiLang") Optional<LangIsocode> apiLang) {
     	SAPCaiObjectWrapper<SpokenLanguage> res = new SAPCaiObjectWrapper<SpokenLanguage>(
     			spokenLanguageService.getByIsocodeAndLevel(isocode, level), 
-    			apiLang.orElse(SAPCaiObjectTransformer.defaultLanguage).toLowerCase());
+    			apiLang.orElse(SAPCaiObjectTransformer.defaultLanguage));
     	
     	if(res == null || res.getResults() == null || res.getResults().isEmpty()) {
     		throw new ItemNotFoundException();

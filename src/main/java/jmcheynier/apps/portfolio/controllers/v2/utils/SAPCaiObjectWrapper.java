@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jmcheynier.apps.portfolio.models.SAP.SAPCaiTransformable;
+import jmcheynier.apps.portfolio.models.enums.LangIsocode;
 
 public class SAPCaiObjectWrapper<T extends SAPCaiTransformable> {
 	
@@ -11,23 +12,17 @@ public class SAPCaiObjectWrapper<T extends SAPCaiTransformable> {
 	private String SAPCaiStringified;
 	
 	
-	public SAPCaiObjectWrapper(T object, String isocode) {
+	public SAPCaiObjectWrapper(T object, LangIsocode isocode) {
 		if(object != null) {
 			this.results = new ArrayList<T>();
 			this.results.add(object);
-			if(isocode != null) {
-				isocode  = isocode.toLowerCase();
-			}
 			this.setSAPCaiStringified(SAPCaiObjectTransformer.SAPCaiStringify(object, isocode));
 		}
 	}
 
 	
-	public SAPCaiObjectWrapper(List<T> object, String isocode) {
+	public SAPCaiObjectWrapper(List<T> object, LangIsocode isocode) {
 		this.results = object;
-		if(isocode != null) {
-			isocode  = isocode.toLowerCase();
-		}
 		this.setSAPCaiStringified(SAPCaiObjectTransformer.SAPCaiStringify(object, isocode));
 	}
 

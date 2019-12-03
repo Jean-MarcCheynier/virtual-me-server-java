@@ -1,18 +1,20 @@
 package jmcheynier.apps.portfolio.models.mongoModel;
 
-import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.data.annotation.Id;
 
 import jmcheynier.apps.portfolio.models.SAP.SAPCaiTransformable;
+import jmcheynier.apps.portfolio.models.enums.LangIsocode;
+import jmcheynier.apps.portfolio.models.enums.LevelCode;
 
-public class SpokenLanguage extends SAPCaiTransformable {
+public class SpokenLanguage implements SAPCaiTransformable {
 	
     @Id
     public String id;
     public String isocode;
-    public HashMap<String, String> values;
-    public String level;
+    public Map<LangIsocode, String> values;
+    public LevelCode level;
 
     public SpokenLanguage() {} 
 
@@ -24,7 +26,7 @@ public class SpokenLanguage extends SAPCaiTransformable {
     }
 
 	@Override
-	public String SAPCaiStringify(String isocode) {
+	public String SAPCaiStringify(LangIsocode isocode) {
 		if(values.containsKey(isocode)) {	
 			return values.get(isocode);
 		}else {

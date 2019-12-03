@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import jmcheynier.apps.portfolio.models.enums.LangIsocode;
+import jmcheynier.apps.portfolio.models.enums.LevelCode;
 import jmcheynier.apps.portfolio.models.mongoModel.SpokenLanguage;
 import jmcheynier.apps.portfolio.repositories.mongoRepositories.SpokenLanguageMongoRepository;
 
@@ -20,17 +22,17 @@ public class SpokenLanguageService {
         return spokenLanguageMongoRepository.findAll();
     }  
  
-    public List<SpokenLanguage> getByLevel(@PathVariable("level") String level) {
-    	return spokenLanguageMongoRepository.findByLevel(level);
+    public List<SpokenLanguage> getByLevel(LevelCode level) {
+    	return spokenLanguageMongoRepository.findByLevel(level.name());
     }
     
 
-    public SpokenLanguage getByIsocode(@PathVariable("isocode") String isocode) {
-    	return spokenLanguageMongoRepository.findByIsocode(isocode);
+    public SpokenLanguage getByIsocode(LangIsocode isocode) {
+    	return spokenLanguageMongoRepository.findByIsocode(isocode.name());
     }
     
-	public List<SpokenLanguage> getByIsocodeAndLevel(String isocode, String level) {
-		return spokenLanguageMongoRepository.findByIsocodeAndLevel(isocode, level);
+	public List<SpokenLanguage> getByIsocodeAndLevel(LangIsocode isocode, LevelCode level) {
+		return spokenLanguageMongoRepository.findByIsocodeAndLevel(isocode.name(), level.name());
 	}
    
     public void save(@RequestBody SpokenLanguage spokenLanguage) {
