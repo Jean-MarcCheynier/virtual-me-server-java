@@ -9,6 +9,7 @@ public interface SAPCaiTransformable {
 	 * @param language isocode
 	 * @return Stringified object
 	 */
+
 	public String SAPCaiStringify(LangIsocode isocode);
 
 }

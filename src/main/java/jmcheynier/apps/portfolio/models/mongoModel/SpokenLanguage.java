@@ -25,7 +25,6 @@ public class SpokenLanguage implements SAPCaiTransformable {
                 id, values, isocode, level);
     }
 
-	@Override
 	public String SAPCaiStringify(LangIsocode isocode) {
 		if(values.containsKey(isocode)) {	
 			return values.get(isocode);

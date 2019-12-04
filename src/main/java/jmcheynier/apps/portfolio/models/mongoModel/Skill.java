@@ -28,10 +28,12 @@ public class Skill implements SAPCaiTransformable {
                 id, values, type);
     }
 
-	@Override
 	public String SAPCaiStringify(LangIsocode isocode) {
-		// TODO Auto-generated method stub
-		return null;
+		if(values.containsKey(isocode)) {	
+			return values.get(isocode);
+		}else {
+			return "error";
+		}
 	}
 
 }

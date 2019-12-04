@@ -5,6 +5,8 @@ import java.util.HashMap;
 
 import org.springframework.data.annotation.Id;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jmcheynier.apps.portfolio.models.SAP.SAPCaiTransformable;
 import jmcheynier.apps.portfolio.models.enums.LangIsocode;
 
@@ -13,15 +15,21 @@ public class Degree implements SAPCaiTransformable {
     @Id
     public String id;
     public String code;
+    @JsonFormat(pattern="yyyy-MM-dd")
     public Date startDate;
+    @JsonFormat(pattern="yyyy-MM-dd")
     public Date endDate;
     public String type;
+    public String specialty;
     public HashMap<LangIsocode, String> values;
+    public Institute institute;
 
-	@Override
 	public String SAPCaiStringify(LangIsocode isocode) {
-		// TODO Auto-generated method stub
-		return null;
+		if(values.containsKey(isocode)) {	
+			return values.get(isocode);
+		}else {
+			return "error";
+		}
 	}
 
 }
