@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import jmcheynier.apps.portfolio.models.Action;
 import jmcheynier.apps.portfolio.models.Message;
 import jmcheynier.apps.portfolio.services.MessageHandler;
 import jmcheynier.apps.portfolio.services.SocketService;
@@ -139,5 +140,15 @@ public class WebSocketController {
 		headerAccessor.setSessionId(destinationSessionId);
 		headerAccessor.setLeaveMutable(true);
 		messagingTemplate.convertAndSendToUser(destinationSessionId, "/subscribe/private", jsonMapper.writeValueAsString(destinationSessionId + ": " + message), headerAccessor.getMessageHeaders());
+	}
+	
+
+	void triggerActionToUser(String destinationSessionId, Action action) throws JsonProcessingException {
+		SimpMessageHeaderAccessor headerAccessor = SimpMessageHeaderAccessor.create(SimpMessageType.MESSAGE);
+		headerAccessor.setSessionId("123456");
+		headerAccessor.setLeaveMutable(true);
+		messagingTemplate.convertAndSend("/topic/greetings", "Hello!"); 
+		messagingTemplate.convertAndSend("/topic/private/1368", "Hello! 1368"); 
+		messagingTemplate.convertAndSendToUser("123456", "/private", action, headerAccessor.getMessageHeaders());
 	}
 }

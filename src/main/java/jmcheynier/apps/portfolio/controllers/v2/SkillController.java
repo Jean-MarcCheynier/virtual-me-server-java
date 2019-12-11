@@ -21,23 +21,20 @@ public class SkillController {
 	@Autowired
 	private SkillMongoRepository skillMongoRepository;
 
-	    @GetMapping
-	    public List<Skill> list() {
-	        return skillMongoRepository.findAll();
-	    }
-	    
-	    @GetMapping("/{id}")
-	    public Optional<Skill> get(@PathVariable("id") String id) {
-	    	return skillMongoRepository.findById(id);
-	    }
-	   
-	    @PostMapping
-	    public void post(@RequestBody Skill skill) {
-	    	skillMongoRepository.save(skill);
-	    }
-
-
-
+    @GetMapping
+    public List<Skill> list() {
+        return skillMongoRepository.findAll();
+    }
+    
+    @GetMapping("/{id}")
+    public Optional<Skill> get(@PathVariable("id") String id) {
+    	return skillMongoRepository.findById(id);
+    }
+   
+    @PostMapping
+    public void post(@RequestBody Skill skill) {
+    	skillMongoRepository.save(skill);
+    }
 }
 
 
