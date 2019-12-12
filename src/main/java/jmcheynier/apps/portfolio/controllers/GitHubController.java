@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import jmcheynier.apps.portfolio.services.GithubService;
 
 @RestController
-@RequestMapping("/api/v1/github")
+@RequestMapping("/api/v2/github")
 public class GitHubController {
 	
 	@Autowired
