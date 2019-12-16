@@ -4,6 +4,7 @@ public enum ActionCode {
 	
 	changeTheme,
 	changeTitle,
+	toggleSlide,
 	openPage
 	
 

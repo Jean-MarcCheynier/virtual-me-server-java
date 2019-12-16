@@ -4,6 +4,8 @@ package jmcheynier.apps.portfolio.controllers;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,19 +23,21 @@ public class GitHubController {
 
 
 
-	@GetMapping("/service/{serviceName}")
-	public String commentsGithubGraphQL(@PathVariable("serviceName") String serviceName) throws IOException {
-		String res ="";
+	@GetMapping(value="/service/{serviceName}", produces=MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Object> commentsGithubGraphQL(@PathVariable("serviceName") String serviceName) throws IOException {
+		ResponseEntity<Object> res;
 		switch (serviceName) {
 		case "getRelease" :
-			res= githubService.getGithubReleases();
+			res= ResponseEntity.ok(githubService.getGithubReleases());
 			break;
 
 		default:
-			res = githubService.getGithubTags();
+			res = ResponseEntity.notFound().build();
 			break;
 		}
+		
 		return res;
+		
 
 	}
 
