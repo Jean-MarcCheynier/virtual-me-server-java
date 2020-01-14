@@ -15,7 +15,17 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 })
 
 public abstract class Message {
+	
+	private String from;
 
 	public Message() {}
+	
+	public void setFrom(String from) {
+		this.from = from;
+	}
 
+	public String getFrom() {
+		return this.from;
+	}
+	
 }

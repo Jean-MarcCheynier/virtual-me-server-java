@@ -3,8 +3,6 @@ package jmcheynier.apps.portfolio.controllers.v2.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.http.ResponseEntity;
-
 import jmcheynier.apps.portfolio.models.SAP.SAPCaiTransformable;
 import jmcheynier.apps.portfolio.models.enums.LangIsocode;
 
@@ -13,7 +11,6 @@ public class SAPCaiObjectWrapper<T extends SAPCaiTransformable> {
 	private List<T> results;
 	private String SAPCaiStringified;
 	
-	
 	public SAPCaiObjectWrapper(T object, LangIsocode isocode) {
 		if(object != null) {
 			this.results = new ArrayList<T>();
@@ -21,7 +18,6 @@ public class SAPCaiObjectWrapper<T extends SAPCaiTransformable> {
 			this.setSAPCaiStringified(SAPCaiObjectTransformer.SAPCaiStringify(object, isocode));
 		}
 	}
-
 	
 	public SAPCaiObjectWrapper(List<T> object, LangIsocode isocode) {
 		this.results = object;

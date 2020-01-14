@@ -16,15 +16,16 @@ public class SocketService {
 	private SimpMessagingTemplate messagingTemplate;
 	
 	public void sendPrivateMessage(String to, Action message) {
-		messagingTemplate.convertAndSend("/subscribe/private/" + to, message);	
+		System.out.println("/action/private/"+to);
+		messagingTemplate.convertAndSend("/action/private/" + to, message);	
 	}
 	
 	public void sendPrivateMessage(String to, Message message) {
-		messagingTemplate.convertAndSend("/subscribe/private/" + to, message);	
+		messagingTemplate.convertAndSend("/action/private/" + to, message);	
 	}
 	
 	public void sendPrivateMessageText(String to, String message) {
-		messagingTemplate.convertAndSend("/subscribe/private/" + to, message);	
+		messagingTemplate.convertAndSend("/action/private/" + to, message);	
 	}
 	
 	public void sendPrivateMultiple(String to, List<Message> messageList) {

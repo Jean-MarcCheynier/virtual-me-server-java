@@ -50,7 +50,7 @@ public class SAPController {
 		
 		DialogRequest dialogRequest = new DialogRequest();
 		dialogRequest.setMessage(messageText);
-		dialogRequest.setConversationId("123456");
+		dialogRequest.setConversationId("12345");
 		return SAPService.sendDialogRequest(dialogRequest);
 	}
 

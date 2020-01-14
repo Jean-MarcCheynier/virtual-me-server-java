@@ -148,7 +148,7 @@ public class WebSocketController {
 		headerAccessor.setSessionId("123456");
 		headerAccessor.setLeaveMutable(true);
 		messagingTemplate.convertAndSend("/topic/greetings", "Hello!"); 
-		messagingTemplate.convertAndSend("/topic/private/1368", action); 
+		messagingTemplate.convertAndSend("/action/private/1368", action); 
 		messagingTemplate.convertAndSendToUser("123456", "/private", action, headerAccessor.getMessageHeaders());
 	}
 }

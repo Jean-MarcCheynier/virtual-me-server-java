@@ -3,6 +3,7 @@ package jmcheynier.apps.portfolio.services;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,7 +66,12 @@ public class SAPService {
 		
 		if(response!=null && response.getStatusCode().equals(HttpStatus.OK)) {
 			DialogResponse dialogResponse = response.getBody();
-			listMessage.addAll(dialogResponse.getResults().getMessages());
+			List<Message> botMessages =  dialogResponse.getResults().getMessages();
+			botMessages.stream().map(ob -> { 
+				ob.setFrom("bot"); 
+				return ob;
+			}).collect(Collectors.toList());
+			listMessage.addAll(botMessages);
 		}
 		return listMessage;
 
