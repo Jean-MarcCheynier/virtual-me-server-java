@@ -1,8 +1,5 @@
 package jmcheynier.apps.portfolio.controllers.v2;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,6 +40,14 @@ public class DegreeController {
 	    public SAPCaiObjectWrapper<Degree> byType(@PathVariable("code") String code) {   	
 	    	SAPCaiObjectWrapper<Degree> res = new SAPCaiObjectWrapper<Degree>(
 	    		degreeMongoRepository.findByCode(code), 
+	    		SAPCaiObjectTransformer.defaultLanguage);
+	        return res;
+	    }
+	    
+	    @GetMapping("/level/{level}")
+	    public SAPCaiObjectWrapper<Degree> byLevel(@PathVariable("level") int level) {   	
+	    	SAPCaiObjectWrapper<Degree> res = new SAPCaiObjectWrapper<Degree>(
+	    		degreeMongoRepository.findByLevelGreaterThanQuery(Integer.toString(level)), 
 	    		SAPCaiObjectTransformer.defaultLanguage);
 	        return res;
 	    }

@@ -15,6 +15,7 @@ public class Degree implements SAPCaiTransformable {
     @Id
     public String id;
     public String code;
+    public int level;
     @JsonFormat(pattern="yyyy-MM-dd")
     public Date startDate;
     @JsonFormat(pattern="yyyy-MM-dd")
