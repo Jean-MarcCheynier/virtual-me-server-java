@@ -10,7 +10,7 @@ public class MyMimeMapping implements WebServerFactoryCustomizer<ConfigurableSer
     @Override
     public void customize(ConfigurableServletWebServerFactory factory) {
         MimeMappings mappings = new MimeMappings(MimeMappings.DEFAULT);
-        mappings.add("js", "application/json; charset=utf-8");
+        mappings.add("js", "application/javascript; charset=utf-8");
         factory.setMimeMappings(mappings);
     }
 }
