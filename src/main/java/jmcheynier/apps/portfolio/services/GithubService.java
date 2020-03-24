@@ -1,7 +1,9 @@
 package jmcheynier.apps.portfolio.services;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 import org.apache.commons.io.FileUtils;
 import org.json.JSONObject;
@@ -40,7 +42,13 @@ public class GithubService {
 		 
 	    ClassLoader classLoader = getClass().getClassLoader();
 	    File file = new File(classLoader.getResource(QUERY).getFile());
-	    String querieString = FileUtils.readFileToString(file, "UTF-8");  
+	    
+	    BufferedReader reader = new BufferedReader(new InputStreamReader(
+	    this.getClass().getResourceAsStream(QUERY)));
+	    
+	    String querieString = reader.toString();
+	    
+	    //String querieString = FileUtils.readFileToString(file, "UTF-8");  
 	    json.put("query",  querieString.trim()/*.replaceAll("(\\r|\\n)", "")*/);
 		
 	    System.out.println(json.toString());
