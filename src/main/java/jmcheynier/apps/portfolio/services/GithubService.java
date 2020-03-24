@@ -9,6 +9,7 @@ import org.apache.commons.io.FileUtils;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
@@ -71,7 +72,11 @@ public class GithubService {
 		JSONObject json = new JSONObject();
 		 
 	    ClassLoader classLoader = getClass().getClassLoader();
-	    File file = new File(classLoader.getResource(QUERY_RELEASES).getFile());
+	    //File file = new File(classLoader.getResource(QUERY_RELEASES).getFile());
+	    
+	    File file = new ClassPathResource(QUERY_RELEASES).getFile();
+	    
+	    
 	    String querieString = FileUtils.readFileToString(file, "UTF-8");  
 	    json.put("query",  querieString.trim());
 		
