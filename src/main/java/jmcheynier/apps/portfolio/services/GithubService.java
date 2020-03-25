@@ -36,6 +36,7 @@ public class GithubService {
 	private static final String QUERY = "queries/query.txt";
 	private static final String QUERY_RELEASES = "queries/queryReleases.txt";
 	private static final MediaType JSONTYPE  = MediaType.get("application/json; charset=utf-8");
+	private static final String queryReleases = "query { repository(name: \"portfolio\", owner: \"Jean-MarcCheynier\") { releases(last: 10, orderBy : { field : CREATED_AT, direction: DESC }) { edges { node {  createdAt publishedAt author { login avatarUrl } tagName name  description descriptionHTML isDraft url name }  } } }}";
 	
 	
 	public String getGithubTags() throws IOException {
@@ -72,13 +73,14 @@ public class GithubService {
 		JSONObject json = new JSONObject();
 		 
 	    ClassLoader classLoader = getClass().getClassLoader();
+	    
 	    //File file = new File(classLoader.getResource(QUERY_RELEASES).getFile());
 	    
 	    File file = new ClassPathResource(QUERY_RELEASES).getFile();
 	    
 	    
 	    String querieString = FileUtils.readFileToString(file, "UTF-8");  
-	    json.put("query",  querieString.trim());
+	    json.put("query",  queryReleases.trim());
 		
 	    System.out.println(json.toString());
 
