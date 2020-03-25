@@ -42,16 +42,8 @@ public class GithubService {
 	public String getGithubTags() throws IOException {
 		JSONObject json = new JSONObject();
 		 
-	    ClassLoader classLoader = getClass().getClassLoader();
-	    File file = new File(classLoader.getResource(QUERY).getFile());
-	    
-	    BufferedReader reader = new BufferedReader(new InputStreamReader(
-	    this.getClass().getResourceAsStream(QUERY)));
-	    
-	    String querieString = reader.toString();
-	    
-	    //String querieString = FileUtils.readFileToString(file, "UTF-8");  
-	    json.put("query",  querieString.trim()/*.replaceAll("(\\r|\\n)", "")*/);
+
+	    json.put("query",  queryReleases.trim()/*.replaceAll("(\\r|\\n)", "")*/);
 		
 	    System.out.println(json.toString());
 
@@ -72,17 +64,8 @@ public class GithubService {
 	public String getGithubReleases() throws IOException {
 		JSONObject json = new JSONObject();
 		 
-	    ClassLoader classLoader = getClass().getClassLoader();
-	    
-	    //File file = new File(classLoader.getResource(QUERY_RELEASES).getFile());
-	    
-	    File file = new ClassPathResource(QUERY_RELEASES).getFile();
-	    
-	    
-	    String querieString = FileUtils.readFileToString(file, "UTF-8");  
-	    json.put("query",  queryReleases.trim());
-		
-	    System.out.println(json.toString());
+ 
+	    json.put("query",  queryReleases.trim());	
 
 		OkHttpClient client = new OkHttpClient();
 		
